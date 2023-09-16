@@ -1,30 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/model/todo_model.dart';
+//import 'package:todo_app/screens/home.dart';
 
 class ToDoItem extends StatelessWidget {
-  const ToDoItem({super.key});
+  final ToDo todo;
+  final onDeleteItem;
+  final onChangeToDo;
+  const ToDoItem(
+      {super.key,
+      required this.todo,
+      required this.onDeleteItem,
+      required this.onChangeToDo});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 15),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
         onTap: () {
-          print('Todo item clicked');
+          onChangeToDo(todo);
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         tileColor: Colors.white,
-        leading: const Icon(
-          Icons.check_box,
-          color: Colors.blue,
+        leading: Icon(
+          todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
+          color: Colors.purple,
         ),
-        title: const Text(
-          'Sample data',
+        title: Text(
+          todo.todotext!,
           style: TextStyle(
               fontSize: 16,
               color: Colors.black,
-              decoration: TextDecoration.lineThrough),
+              decoration: todo.isDone
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none),
         ),
         trailing: Container(
           height: 35,
@@ -35,7 +47,7 @@ class ToDoItem extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: () {
-              print('Delete button clicked');
+              onDeleteItem(todo.id);
             },
             icon: const Icon(
               Icons.delete,
@@ -45,7 +57,6 @@ class ToDoItem extends StatelessWidget {
           ),
         ),
       ),
-      margin: EdgeInsets.only(bottom: 15),
     );
   }
 }
