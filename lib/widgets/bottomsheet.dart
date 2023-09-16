@@ -43,6 +43,7 @@ class BtmSheet {
                       final newtext = _addtaskController.text;
                       addtask(newtext);
                       Navigator.of(ctx).pop();
+                      FocusManager.instance.primaryFocus?.unfocus();
                     },
                     child: Text(
                       'Add',
